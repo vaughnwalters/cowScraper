@@ -3,14 +3,12 @@
 const { get } = require('request');
 const { load } = require('cheerio');
 const [,, city, state] = process.argv;
-const url =  `https://www.happycow.net/searchmap/?kw=&location=${city}+${state}&vegan=true`
+const url = `https://www.happycow.net/searchmap/?kw=&location=${city}+${state}&vegan=true`
 
 
 if ( city === undefined || state === undefined) {
-  process.stdout.write(`
-    YO \n
-    YOLO \n
-  `)
+  process.stdout.write(
+    "usage: node cow.js 'Los Angeles' CA\n")
 } else {
   Promise.resolve()
   .then(() => madLogzBro())
@@ -20,7 +18,6 @@ if ( city === undefined || state === undefined) {
 let madLogzBro = () => {
   console.log("city", city);
   console.log("state", state);
-  // console.log("url", url);
 }
 
 const scrapeAndReturn = () => {
@@ -42,10 +39,10 @@ const scrapeAndReturn = () => {
     let restaurantArr;
     if (restAddressArr.length === restNameArr.length) {
       for (let i = 0; i < restAddressArr.length; i++) {
-          let restInfo = restNameArr[i] + ", " + restAddressArr[i];
-          restInfo = restInfo.replace(/&apos;/g, "'");
-          process.stdout.write(restInfo+"\n");
-        }
+        let restInfo = restNameArr[i] + ", " + restAddressArr[i];
+        restInfo = restInfo.replace(/&apos;/g, "'");
+        process.stdout.write(restInfo+"\n");
+      }
     } else if (restAddressArr.length > restNameArr.length) {
       console.log("more restaurant addresses than names.  problem on happy cow's end.");
     } else if (restAddressArr.length < restNameArr.length) {
